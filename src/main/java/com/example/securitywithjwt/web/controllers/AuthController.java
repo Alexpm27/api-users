@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 public class AuthController {
 
     @Autowired
@@ -31,7 +32,7 @@ public class AuthController {
     }
 
     @PostMapping("signUp")
-    public ResponseEntity<BaseResponse> create(@Valid @RequestBody SignUpRequest request){
+    public ResponseEntity<BaseResponse> signUp(@Valid @RequestBody SignUpRequest request){
         BaseResponse baseResponse = service.signUp(request);
         return new ResponseEntity<>(baseResponse, baseResponse.getHttpStatus());
     }
