@@ -1,1 +1,1 @@
-web: java -jar target/api-users.jar
+web: java -jar ./target/api-users.jar
