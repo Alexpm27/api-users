@@ -15,7 +15,7 @@ public interface IParameterRepository extends JpaRepository<Parameter, Long> {
 
     List<Parameter> findAllByUserId(Long id);
 
-    @Query(value = "SELECT s.id, s.median, p.date FROM parameters as p\n" +
+    @Query(value = "SELECT p.id, p.humidity_above, p.humidity_below, p.temperature, p.lux, p.status, s.median, p.date FROM parameters as p\n" +
             "INNER JOIN statistics as s ON p.id = s.parameter_id\n" +
             "INNER JOIN users ON users.id = p.user_id\n" +
             "WHERE users.id = :id", nativeQuery = true)

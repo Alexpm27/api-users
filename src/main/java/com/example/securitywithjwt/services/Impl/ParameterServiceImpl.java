@@ -31,7 +31,7 @@ public class ParameterServiceImpl implements IParameterService {
     public BaseResponse getStatisticsByUserId(Long id) {
         return BaseResponse.builder()
                 .data(repository.findAllStatisticsByUserId(id).stream().map(this::toResponse).toList())
-                .message("get History successfully")
+                .message("get statistics successfully")
                 .success(Boolean.TRUE)
                 .httpStatus(HttpStatus.OK)
                 .build();
@@ -52,6 +52,11 @@ public class ParameterServiceImpl implements IParameterService {
     private StatisticResponse toResponse(StatisticsProjection statistic){
         return StatisticResponse.builder()
                 .id(statistic.getId())
+                .humidityAbove(statistic.getHumidity_above())
+                .humidityBelow(statistic.getHumidity_below())
+                .temperature(statistic.getTemperature())
+                .lux(statistic.getLux())
+                .status(statistic.getStatus())
                 .median(statistic.getMedian())
                 .date(statistic.getDate())
                 .build();

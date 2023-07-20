@@ -11,6 +11,16 @@ public class StatisticResponse {
 
     private Long id;
 
+    private Float humidityAbove;
+
+    private Float humidityBelow;
+
+    private Float temperature;
+
+    private Float lux;
+
+    private String status;
+
     private Float median;
 
     private String date;
