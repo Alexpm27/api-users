@@ -2,9 +2,9 @@ package com.example.securitywithjwt.web.controllers;
 
 import com.example.securitywithjwt.services.IAuthService;
 import com.example.securitywithjwt.web.dtos.request.SignUpRequest;
-import com.example.securitywithjwt.web.dtos.request.JwtRequest;
+import com.example.securitywithjwt.web.dtos.request.AuthRequest;
 import com.example.securitywithjwt.web.dtos.response.BaseResponse;
-import com.example.securitywithjwt.web.dtos.response.JwtResponse;
+import com.example.securitywithjwt.web.dtos.response.AuthResponse;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,7 @@ public class AuthController {
 
 
     @PostMapping("/signIn")
-        public ResponseEntity<JwtResponse> signIn(@RequestBody JwtRequest request) {
+        public ResponseEntity<AuthResponse> signIn(@RequestBody AuthRequest request) {
 
         return new ResponseEntity<>(service.signIn(request), HttpStatus.OK);
     }

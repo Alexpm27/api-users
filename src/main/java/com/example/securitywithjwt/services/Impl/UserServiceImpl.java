@@ -1,5 +1,6 @@
 package com.example.securitywithjwt.services.Impl;
 
+import com.example.securitywithjwt.mapper.InterestDtoMapper;
 import com.example.securitywithjwt.persistence.exceptions.NotFoundException;
 import com.example.securitywithjwt.persistence.models.User;
 import com.example.securitywithjwt.persistence.repositories.IUserRepository;
@@ -9,10 +10,14 @@ import com.example.securitywithjwt.web.dtos.request.UpdatePasswordRequest;
 import com.example.securitywithjwt.web.dtos.response.BaseResponse;
 import com.example.securitywithjwt.web.dtos.response.CreateUserResponse;
 import com.example.securitywithjwt.web.dtos.response.UserResponse;
+import com.example.securitywithjwt.web.dtos.response.UsersInterestsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -20,6 +25,8 @@ public class UserServiceImpl implements IUserService {
     private IUserRepository repository;
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
+    InterestDtoMapper interestDtoMapper;
     @Override
     public CreateUserResponse create(SignUpRequest request) {
         return from(repository.save(from(request)));
@@ -45,10 +52,51 @@ public class UserServiceImpl implements IUserService {
         return null;
     }
 
+    @Override
+    public BaseResponse getUserWithInterests(Long userId) {
+        User user = findAndEnsureExists(userId);
+        return BaseResponse.builder()
+                .data(toDto(user))
+                .message("Get user successfully")
+                .success(Boolean.TRUE)
+                .httpStatus(HttpStatus.OK)
+                .statusCode(200)
+                .build();
+    }
+
+    @Override
+    public BaseResponse getAllByCity(String city) {
+        List<User> users = repository.findAllByCity(city);
+        List<UsersInterestsResponse> usersResponses = users.stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+        return BaseResponse.builder()
+                .data(usersResponses)
+                .message("Get all users from " + city + " successfully")
+                .success(Boolean.TRUE)
+                .httpStatus(HttpStatus.OK)
+                .statusCode(200)
+                .build();
+    }
+
+    private UsersInterestsResponse toDto(User user){
+        return UsersInterestsResponse.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .age(user.getAge())
+                .gender(user.getGender())
+                .city(user.getCity())
+                .interests(interestDtoMapper.toDtoList(user.getInterests()))
+                .build();
+    }
+
     private User from(SignUpRequest request){
         User user = new User();
         user.setEmail(request.getEmail());
         user.setName(request.getName());
+        user.setAge(request.getAge());
+        user.setCity(request.getCity());
+        user.setGender(request.getGender());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         return user;
     }

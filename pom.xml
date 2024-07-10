@@ -109,7 +109,7 @@
                 </configuration>
             </plugin>
         </plugins>
-        <finalName>api-users</finalName>
+        <finalName>users-micro</finalName>
     </build>
 
 </project>

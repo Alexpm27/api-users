@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class JwtRequest {
+public class AuthRequest {
 
     @Email
     private String email;

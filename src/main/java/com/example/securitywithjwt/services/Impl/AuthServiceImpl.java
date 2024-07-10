@@ -4,10 +4,10 @@ import com.example.securitywithjwt.security.JwtHelper;
 import com.example.securitywithjwt.security.credentials.CredentialDetailsServiceImpls;
 import com.example.securitywithjwt.services.IAuthService;
 import com.example.securitywithjwt.services.IUserService;
-import com.example.securitywithjwt.web.dtos.request.JwtRequest;
+import com.example.securitywithjwt.web.dtos.request.AuthRequest;
 import com.example.securitywithjwt.web.dtos.request.SignUpRequest;
 import com.example.securitywithjwt.web.dtos.response.BaseResponse;
-import com.example.securitywithjwt.web.dtos.response.JwtResponse;
+import com.example.securitywithjwt.web.dtos.response.AuthResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,7 +31,7 @@ public class AuthServiceImpl implements IAuthService {
     @Autowired
     private IUserService userService;
     @Override
-    public JwtResponse signIn(JwtRequest request) {
+    public AuthResponse signIn(AuthRequest request) {
 
         this.doAuthenticate(request.getEmail(), request.getPassword());
 
@@ -49,6 +49,7 @@ public class AuthServiceImpl implements IAuthService {
                 .message("User created successfully")
                 .success(Boolean.TRUE)
                 .httpStatus(HttpStatus.OK)
+                .statusCode(200)
                 .build();
 
     }
@@ -64,8 +65,8 @@ public class AuthServiceImpl implements IAuthService {
 
     }
 
-    private JwtResponse toJwtResponse(String token, String username){
-        JwtResponse response = JwtResponse.builder()
+    private AuthResponse toJwtResponse(String token, String username){
+        AuthResponse response = AuthResponse.builder()
                 .jwtToken(token)
                 .username(username).build();
         return response;

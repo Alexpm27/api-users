@@ -2,6 +2,7 @@ package com.example.securitywithjwt.web.dtos.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +17,16 @@ public class SignUpRequest {
     private String email;
 
     @NotNull
+    @Size(min = 8, message = "Password should have at least 8 characters")
     private String password;
+
+    @NotNull
+    private int age;
+
+    @NotNull
+    private String city;
+
+    @NotNull
+    private String gender;
 
 }

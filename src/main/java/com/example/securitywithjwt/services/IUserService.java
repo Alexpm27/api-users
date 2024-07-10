@@ -16,4 +16,9 @@ public interface IUserService {
 
     BaseResponse updatePassword(UpdatePasswordRequest request);
 
+    BaseResponse getUserWithInterests(Long userId);
+
+    BaseResponse getAllByCity(String city);
+
+    User findAndEnsureExists(Long id);
 }

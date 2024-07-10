@@ -1,37 +1,29 @@
 package com.example.securitywithjwt.persistence.models;
 
+import com.example.securitywithjwt.mapper.ListToStringConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "parameters")
-public class Parameter {
+@Table(name = "interests")
+public class Interest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, unique = true)
     private Long id;
 
-    private Float humidityAbove;
+    private String description;
 
-    private Float humidityBelow;
-
-    private Float temperature;
-
-    private Float lux;
-
-    private String date;
-
-    private String status;
-
-    @OneToOne
-    private Statistic statistic;
+    @Convert(converter = ListToStringConverter.class)
+    private List<String> activities;
 
     @ManyToOne
     private User user;
+
 }

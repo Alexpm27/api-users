@@ -27,10 +27,13 @@ public class User {
 
     private String password;
 
-    @Column(unique=true)
-    private String productKey;
+    private int age;
 
-    @OneToMany(mappedBy = "user")
-    private List<Parameter> parameters;
+    private String gender;
+
+    private  String city;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Interest> interests;
 
 }
