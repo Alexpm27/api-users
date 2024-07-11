@@ -83,6 +83,7 @@ public class UserServiceImpl implements IUserService {
         return UsersInterestsResponse.builder()
                 .id(user.getId())
                 .name(user.getName())
+                .phone(user.getPhone())
                 .age(user.getAge())
                 .gender(user.getGender())
                 .city(user.getCity())
@@ -94,6 +95,7 @@ public class UserServiceImpl implements IUserService {
         User user = new User();
         user.setEmail(request.getEmail());
         user.setName(request.getName());
+        user.setPhone(request.getPhone());
         user.setAge(request.getAge());
         user.setCity(request.getCity());
         user.setGender(request.getGender());

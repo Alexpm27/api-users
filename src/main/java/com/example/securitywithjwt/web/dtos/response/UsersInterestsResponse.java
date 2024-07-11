@@ -13,6 +13,8 @@ public class UsersInterestsResponse {
 
     private String name;
 
+    private Long phone;
+
     private int age;
 
     private String gender;

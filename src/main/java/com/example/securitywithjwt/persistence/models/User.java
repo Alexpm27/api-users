@@ -27,6 +27,8 @@ public class User {
 
     private String password;
 
+    private Long phone;
+
     private int age;
 
     private String gender;

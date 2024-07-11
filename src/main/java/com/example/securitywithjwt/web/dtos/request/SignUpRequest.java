@@ -24,6 +24,9 @@ public class SignUpRequest {
     private int age;
 
     @NotNull
+    private Long phone;
+
+    @NotNull
     private String city;
 
     @NotNull
