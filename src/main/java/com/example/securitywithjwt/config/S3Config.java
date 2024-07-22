@@ -11,18 +11,18 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class S3Config {
-    @Value("${nada.accesito}")
+   /* @Value("${nada.accesito}")
     private String accessKeyId;
 
     @Value("${nada.secretito}")
-    private String secretKey;
+    private String secretKey;*/
 
     @Value("${nada.pueblo}")
     private String region;
 
     @Bean
     public AmazonS3 s3Client() {
-        BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKeyId, secretKey);
+        BasicAWSCredentials awsCreds = new BasicAWSCredentials("AKIA2UC3CGUR2JPBQDB2", "M871/PkrROZXhuy+luSDYEOqc20aJqi7w+8JjOfS");
         return AmazonS3ClientBuilder.standard()
                 .withRegion(Regions.fromName(region))
                 .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
