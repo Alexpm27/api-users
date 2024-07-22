@@ -5,6 +5,7 @@ import com.example.securitywithjwt.persistence.exceptions.NotFoundException;
 import com.example.securitywithjwt.persistence.models.User;
 import com.example.securitywithjwt.persistence.repositories.IUserRepository;
 import com.example.securitywithjwt.services.IUserService;
+import com.example.securitywithjwt.services.aws.S3Service;
 import com.example.securitywithjwt.web.dtos.request.SignUpRequest;
 import com.example.securitywithjwt.web.dtos.request.UpdatePasswordRequest;
 import com.example.securitywithjwt.web.dtos.response.BaseResponse;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,9 +29,24 @@ public class UserServiceImpl implements IUserService {
     PasswordEncoder passwordEncoder;
     @Autowired
     InterestDtoMapper interestDtoMapper;
+    @Autowired
+    private S3Service s3Service;
+
     @Override
-    public CreateUserResponse create(SignUpRequest request) {
-        return from(repository.save(from(request)));
+    public CreateUserResponse create(SignUpRequest request, MultipartFile file, MultipartFile frontPage) {
+        User user = from(request);
+        if (request.getImageUrl() == null){
+
+            String imageUrl = s3Service.uploadFile(file);
+            String frontPageUrl = s3Service.uploadFile(frontPage);
+            user.setImageUrl(imageUrl);
+            user.setFrontPageUrl(frontPageUrl);
+
+        }else {
+            user.setImageUrl(request.getImageUrl());
+            user.setFrontPageUrl(request.getFrontPageUrl());
+        }
+        return from(repository.save(user));
     }
 
     @Override
@@ -41,6 +58,16 @@ public class UserServiceImpl implements IUserService {
     public BaseResponse getUserByEmail(String email) {
         return BaseResponse.builder()
                 .data(toUserResponse(findUserByEmailAndEnsureExists(email)))
+                .message("User get successfully")
+                .success(Boolean.TRUE)
+                .httpStatus(HttpStatus.OK)
+                .build();
+    }
+
+    @Override
+    public BaseResponse getById(Long id) {
+        return BaseResponse.builder()
+                .data(toUserResponse(findAndEnsureExists(id)))
                 .message("User get successfully")
                 .success(Boolean.TRUE)
                 .httpStatus(HttpStatus.OK)
@@ -87,6 +114,8 @@ public class UserServiceImpl implements IUserService {
                 .age(user.getAge())
                 .gender(user.getGender())
                 .city(user.getCity())
+                .profileUrl(user.getImageUrl())
+                .frontPageUrl(user.getFrontPageUrl())
                 .interests(interestDtoMapper.toDtoList(user.getInterests()))
                 .build();
     }

@@ -16,6 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class AuthServiceImpl implements IAuthService {
@@ -42,10 +43,9 @@ public class AuthServiceImpl implements IAuthService {
     }
 
     @Override
-    public BaseResponse signUp(SignUpRequest request) {
-
+    public BaseResponse signUp(SignUpRequest request, MultipartFile file, MultipartFile frontPage) {
         return BaseResponse.builder()
-                .data(userService.create(request))
+                .data(userService.create(request, file, frontPage))
                 .message("User created successfully")
                 .success(Boolean.TRUE)
                 .httpStatus(HttpStatus.OK)
