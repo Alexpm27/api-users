@@ -1,5 +1,6 @@
 package com.example.securitywithjwt.services.Impl;
 
+import com.example.securitywithjwt.persistence.models.User;
 import com.example.securitywithjwt.security.JwtHelper;
 import com.example.securitywithjwt.security.credentials.CredentialDetailsServiceImpls;
 import com.example.securitywithjwt.services.IAuthService;
@@ -39,7 +40,9 @@ public class AuthServiceImpl implements IAuthService {
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
         String token = this.helper.generateToken(userDetails);
 
-        return toJwtResponse(token, userDetails.getUsername());
+        User user = userService.get(request.getEmail());
+
+        return toJwtResponse(token, userDetails.getUsername(), user.getId());
     }
 
     @Override
@@ -65,10 +68,11 @@ public class AuthServiceImpl implements IAuthService {
 
     }
 
-    private AuthResponse toJwtResponse(String token, String username){
+    private AuthResponse toJwtResponse(String token, String username, Long id){
         AuthResponse response = AuthResponse.builder()
                 .jwtToken(token)
-                .username(username).build();
+                .username(username)
+                .id(id).build();
         return response;
     }
 }
