@@ -112,6 +112,7 @@ public class UserServiceImpl implements IUserService {
                 .name(user.getName())
                 .phone(user.getPhone())
                 .age(user.getAge())
+                .description(user.getDescription())
                 .gender(user.getGender())
                 .city(user.getCity())
                 .profileUrl(user.getImageUrl())
@@ -125,6 +126,7 @@ public class UserServiceImpl implements IUserService {
         user.setEmail(request.getEmail());
         user.setName(request.getName());
         user.setPhone(request.getPhone());
+        user.setDescription(request.getDescription());
         user.setAge(request.getAge());
         user.setCity(request.getCity());
         user.setGender(request.getGender());

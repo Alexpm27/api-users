@@ -21,6 +21,8 @@ public class UsersInterestsResponse {
 
     private  String city;
 
+    private String description;
+
     private String profileUrl;
 
     private String frontPageUrl;

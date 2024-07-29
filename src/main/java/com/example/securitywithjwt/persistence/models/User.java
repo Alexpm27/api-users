@@ -44,6 +44,8 @@ public class User {
 
     private String frontPageUrl;
 
+    private String description;
+
     @NotBlank
     @Size(min = 2, max = 100)
     private String city;

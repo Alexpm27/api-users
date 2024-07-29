@@ -13,7 +13,6 @@ public class InterestDtoMapper {
         return InterestResponse.builder()
                 .id(interest.getId())
                 .description(interest.getDescription())
-                .activities(interest.getActivities())
                 .build();
     }
 

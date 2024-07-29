@@ -11,6 +11,4 @@ public class InterestResponse {
     private Long id;
 
     private String description;
-
-    private List<String> activities;
 }

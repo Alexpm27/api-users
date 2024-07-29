@@ -55,14 +55,12 @@ public class InterestServiceImpl implements IInterestService {
         return InterestResponse.builder()
                 .id(interest.getId())
                 .description(interest.getDescription())
-                .activities(interest.getActivities())
                 .build();
     }
 
     private Interest from(InterestRequest request, Long userId){
         Interest interest = new Interest();
         interest.setDescription(request.getDescription());
-        interest.setActivities(request.getActivities());
         interest.setUser(userService.findAndEnsureExists(userId));
         return interest;
     }

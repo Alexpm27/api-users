@@ -40,4 +40,5 @@ public class SignUpRequest {
     private String imageUrl;
 
     private String frontPageUrl;
-}
+
+    private String description;}

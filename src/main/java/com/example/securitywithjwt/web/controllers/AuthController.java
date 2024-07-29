@@ -41,6 +41,7 @@ public class AuthController {
             @RequestParam("password") String password,
             @RequestParam("phone") String phone,
             @RequestParam("age") String age,
+            @RequestParam("description") String description,
             @RequestParam("gender") String gender,
             @RequestParam("city") String city,
             @RequestParam(value = "imageUrl", required = false) String imageUrl,
@@ -52,6 +53,7 @@ public class AuthController {
                 .password(password)
                 .phone(Long.parseLong(phone))
                 .age(Integer.parseInt(age))
+                .description(description)
                 .gender(gender)
                 .city(city)
                 .imageUrl(imageUrl)
